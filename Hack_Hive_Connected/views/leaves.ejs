@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaves Calendar - Scientia Demo School</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: url(/images/caroo.png) no-repeat;
+            background-size: cover;
+            color: #1E3A8A;
+            min-height: 100vh;
+            padding-top: 120px;
+            overflow-x: hidden;
+        }
+
+        .nav-bar {
+            background: transparent;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-radius: 0 0 80px 80px;
+            height: 80px;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .logout-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #1E3A8A;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    animation: popUp 0.5s ease-out forwards;
+}
+
+@keyframes popUp {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.logout-popup p {
+    font-size: 16px;
+    color: #1E3A8A;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.logout-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.logout-buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-buttons .yes-btn {
+    background: #F472B6;
+    color: white;
+}
+
+.logout-buttons .yes-btn:hover {
+    background: #e81e1e;
+}
+
+.logout-buttons .no-btn {
+    background: #37b2f4ce;
+    color: #1E3A8A;
+}
+
+.logout-buttons .no-btn:hover {
+    background: #0145ff;
+    color: white;
+}
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            font-size: 40px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .profile-icon:hover {
+            color: #0145ff;
+            transform: scale(1.2);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            font-size: 20px;
+            width: max-content;
+            border-radius: 10px;
+        }
+
+        .user-info span {
+            font-weight: 1000;
+            color: #F3F4F6;
+        }
+
+        .logout-btn {
+            background: #F472B6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 50%;
+        }
+
+        .logout-btn:hover {
+            background: #e81e1e;
+            transform: translateY(-2px);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            color: #F472B6;
+            transform: scale(1.2);
+        }
+
+        .home-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .home-icon:hover {
+            color: #48BB78;
+            transform: scale(1.2);
+        }
+
+        .calendar-container {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgb(94, 94, 94);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            margin: 20px auto;
+            animation: popUp 0.8s ease-out forwards;
+        }
+
+        @keyframes popUp {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            80% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .calendar-title {
+            font-size: 36px;
+            color: #0145ff;
+            margin-bottom: 10px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header h1 {
+            font-size: 28px;
+            color: #0145ff;
+        }
+
+        .nav-button {
+            background: #37b2f4ce;
+            color: #1E3A8A;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #0145ff;
+            color: white;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .calendar-day {
+            padding: 10px;
+            font-size: 14px;
+            color: #1E3A8A;
+            background: #f5f5f5;
+            border-radius: 5px;
+            position: relative;
+            min-height: 60px; /* Ensure space for holiday text */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calendar-day.header {
+            background: #6cddf1ce;
+            font-weight: 600;
+        }
+
+        .calendar-day.holiday {
+            background: #d32f2f;
+            color: white;
+        }
+
+        .calendar-day.holiday span {
+            font-size: 10px;
+            color: white;
+            margin-top: 5px;
+            line-height: 1.2;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+        }
+
+        @media (max-width: 480px) {
+            .calendar-container {
+                padding: 15px;
+                margin: 10px auto;
+            }
+            .calendar-title {
+                font-size: 28px;
+            }
+            .calendar-header h1 {
+                font-size: 24px;
+            }
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            .calendar-day {
+                padding: 8px;
+                font-size: 12px;
+                min-height: 50px;
+            }
+            .calendar-day.holiday span {
+                font-size: 8px;
+            }
+            .nav-bar {
+                padding: 5px 10px;
+                height: 60px;
+            }
+            .profile-icon, .home-icon, .notification-icon {
+                font-size: 24px;
+            }
+            .user-info span {
+                font-size: 16px;
+            }
+            .logout-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            body {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <div class="logout-buttons">
+            <button class="yes-btn" onclick="confirmLogout()">Yes</button>
+            <button class="no-btn" onclick="cancelLogout()">No</button>
+        </div>
+    </div>
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <i class='bx bx-user-circle profile-icon' onclick="window.location.href='profile.html'"></i>
+            <div class="user-info">
+                <span>Name: John Doe</span>
+                <span>Roll: 15</span>
+                <span>Class: 10A</span>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
+        <div class="nav-right">
+            <span class="home-icon" onclick="window.location.href='/dashboard'">🏠</span>
+            <a class='bx bxs-bell notification-icon' href="/notifications""></a>
+
+        </div>
+    </nav>
+
+    <div class="calendar-container">
+        <div class="calendar-title">Calendar of Leaves</div>
+        <div class="calendar-header">
+            <button class="nav-button" id="prevMonth">< Prev</button>
+            <h1 id="monthYear">June 2024</h1>
+            <button class="nav-button" id="nextMonth">Next ></button>
+        </div>
+        <div class="calendar" id="calendar"></div>
+    </div>
+
+    <script>
+        const holidays = {
+            "2024-06-08": "Second Saturday",
+            "2024-06-17": "Bakrid",
+            "2024-06-22": "Fourth Saturday",
+            "2024-07-13": "Second Saturday",
+            "2024-07-17": "Muharram",
+            "2024-07-27": "Fourth Saturday",
+            "2024-08-10": "Second Saturday",
+            "2024-08-15": "Independence Day",
+            "2024-08-24": "Fourth Saturday",
+            "2024-08-26": "Janmashtami",
+            "2024-09-14": "Second Saturday",
+            "2024-09-16": "Eid e Milad",
+            "2024-09-28": "Fourth Saturday",
+            "2024-10-02": "Gandhi Jayanti",
+            "2024-10-12": "Second Saturday",
+            "2024-10-13": "Vijaya Dashami",
+            "2024-10-26": "Fourth Saturday",
+            "2024-11-09": "Second Saturday",
+            "2024-11-15": "Guru Nanak Jayanti",
+            "2024-11-23": "Fourth Saturday",
+            "2024-12-14": "Second Saturday",
+            "2024-12-25": "Christmas Day",
+            "2024-12-28": "Fourth Saturday",
+            "2025-01-11": "Second Saturday",
+            "2025-01-25": "Fourth Saturday",
+            "2025-01-26": "Republic Day",
+            "2025-02-08": "Second Saturday",
+            "2025-02-22": "Fourth Saturday",
+            "2025-02-26": "Maha Shivaratri",
+            "2025-03-08": "Second Saturday",
+            "2025-03-14": "Holi",
+            "2025-03-22": "Fourth Saturday",
+            "2025-01-26":"Republic Day"
+        };
+
+        const months = [
+            "June 2024", "July 2024", "August 2024", "September 2024",
+            "October 2024", "November 2024", "December 2024",
+            "January 2025", "February 2025", "March 2025"
+        ];
+
+        let currentMonthIndex = 0;
+
+        function renderCalendar(monthIndex) {
+            const monthYear = months[monthIndex];
+            document.getElementById("monthYear").textContent = monthYear;
+
+            const [monthName, year] = monthYear.split(" ");
+            const date = new Date(`${monthName} 1, ${year}`);
+            const firstDay = date.getDay(); // 0 = Sunday, 6 = Saturday
+            const daysInMonth = new Date(parseInt(year), months.indexOf(monthYear) + 1, 0).getDate();
+
+            const calendar = document.getElementById("calendar");
+            calendar.innerHTML = "";
+
+            // Add day headers
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            days.forEach(day => {
+                const div = document.createElement("div");
+                div.className = "calendar-day header";
+                div.textContent = day;
+                calendar.appendChild(div);
+            });
+
+            // Add empty days before the first day
+            for (let i = 0; i < firstDay; i++) {
+                const div = document.createElement("div");
+                div.className = "calendar-day empty";
+                calendar.appendChild(div);
+            };
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(monthIndex + 6).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const div = document.createElement("div");
+                div.className = "calendar-day";
+                div.innerHTML = `${day}`;
+
+                // Check if it's a Sunday or holiday
+                const isSunday = (firstDay + day - 1) % 7 === 0;
+                if (isSunday || holidays[dateStr]) {
+                    div.className += " holiday";
+                    if (holidays[dateStr]) {
+                        const span = document.createElement("span");
+                        span.textContent = holidays[dateStr];
+                        div.appendChild(span);
+                    }
+                }
+
+                calendar.appendChild(div);
+            }
+        }
+
+        document.getElementById("prevMonth").addEventListener("click", () => {
+            if (currentMonthIndex > 0) {
+                currentMonthIndex--;
+                renderCalendar(currentMonthIndex);
+            }
+        });
+
+        document.getElementById("nextMonth").addEventListener("click", () => {
+            if (currentMonthIndex < months.length - 1) {
+                currentMonthIndex++;
+                renderCalendar(currentMonthIndex);
+            }
+        });
+
+        // Initial render
+        renderCalendar(currentMonthIndex);
+    </script>
+    <script>
+        function showLogoutPopup() {
+            document.getElementById("logoutPopup").style.display = "block";
+        }
+    
+        function confirmLogout() {
+            window.location.href = "/login";  // Changed from "/" to "/login"
+        }
+    
+        function cancelLogout() {
+            document.getElementById("logoutPopup").style.display = "none";
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

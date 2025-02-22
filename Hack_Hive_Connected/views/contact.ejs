@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers - Scientia Demo School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url(/images/caroo.png) no-repeat;
+            background-size: cover;
+            color: #1E3A8A;
+            min-height: 100vh;
+        }
+
+        /* Slider Section */
+        .slider-container {
+            height: 50vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            background-color:#1E3A8A;
+            
+        }
+
+        .slider {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .teacher-photo {
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .teacher-photo img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-left: 300px;
+        }
+
+        .teacher-info {
+            flex: 1;
+            padding: 10px;
+            padding-left: 30px;
+            background: #6cddf1ce;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            width: 100px;
+            height: 300px;
+            margin-right: 300px;
+        }
+
+        .teacher-info h2 {
+            font-size: 30px;
+            color: #0145ff;
+            margin-top: 30px;
+            margin-bottom: 60px;
+        }
+
+        .teacher-info p {
+            font-size: 20px;
+            color: #1E3A8A;
+            line-height: 1.5;
+        }
+
+        /* Contact List Section */
+        .contact-list {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-list h2 {
+            text-align: center;
+            font-size: 24px;
+            color: #0145ff;
+            margin-bottom: 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: #37b2f4ce;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-details h3 {
+            font-size: 18px;
+            color: #1E3A8A;
+            margin-bottom: 5px;
+        }
+
+        .contact-details p {
+            font-size: 14px;
+            color: #4A5568;
+            margin-bottom: 10px;
+        }
+
+        .telephone-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .telephone-btn:hover {
+            background: #d79cf0;
+            transform: translateY(-2px);
+        }
+
+        .telephone-btn::before {
+            content: '📞';
+            margin-right: 5px;
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .slide {
+                flex-direction: column;
+                text-align: center;
+                max-height: fit-content;
+            }
+
+            .teacher-photo img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .teacher-info {
+                max-width: 100%;
+                max-height: 100%;
+
+            }
+        }
+
+        @media (max-width: 480px) {
+            .teacher-photo img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .contact-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-card img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .telephone-btn {
+                margin-top: 10px;
+            }
+        }
+        .nav-bar {
+            background: transparent;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            margin-top: 50px;
+            border-radius: 80px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            font-size: 40px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .profile-icon:hover {
+            color: #0145ff; /* Blue on hover */
+            transform: scale(1.2); /* Slight enlargement */
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            font-size: 20px;
+            width: max-content;
+            border-radius: 10px;
+        }
+
+        .user-info span {
+            font-weight: 1000;
+            color: #F3F4F6;
+        }
+
+        .logout-btn {
+            background: #F472B6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 50%;
+        }
+
+        .logout-btn:hover {
+            background: #e81e1e;
+            transform: translateY(-2px);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            color: #F472B6;
+            transform: scale(1.2);
+        }
+
+        .home-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .home-icon:hover {
+            color: #48BB78;
+            transform: scale(1.2);
+        }
+
+        /* Add these new styles for the logout popup */
+        .logout-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #1E3A8A;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            animation: popUp 0.5s ease-out forwards;
+        }
+
+        @keyframes popUp {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            80% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .logout-popup p {
+            font-size: 16px;
+            color: #1E3A8A;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .logout-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .logout-buttons button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .logout-buttons .yes-btn {
+            background: #F472B6;
+            color: white;
+        }
+
+        .logout-buttons .yes-btn:hover {
+            background: #e81e1e;
+        }
+
+        .logout-buttons .no-btn {
+            background: #37b2f4ce;
+            color: #1E3A8A;
+        }
+
+        .logout-buttons .no-btn:hover {
+            background: #0145ff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add this popup div right after body tag -->
+    <div class="logout-popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <div class="logout-buttons">
+            <button class="yes-btn" onclick="confirmLogout()">Yes</button>
+            <button class="no-btn" onclick="cancelLogout()">No</button>
+        </div>
+    </div>
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <i class='bx bx-user-circle profile-icon' onclick="window.location.href='profile.html'"></i>
+            <div class="user-info">
+                <span>Name: John Doe</span>
+                <span>Roll: 15</span>
+                <span>Class: 10A</span>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
+        <span class="home-icon" onclick="window.location.href='dashbord.html'">🏠</span>
+        <div class="nav-right">
+            <i class='bx bxs-bell notification-icon' onclick="window.open('notification.html', '_blank')"></i>
+        </div>
+    </nav>
+    <!-- Slider Section -->
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide">
+                <div class="teacher-photo">
+                    <img src="/images/icon.webp" alt="Teacher 1">
+                </div>
+                <div class="teacher-info">
+                    <h2>Ms. Jane Smith</h2>
+                    <p>Subject: Mathematics<br>Experience: 10 years<br>Qualification: M.Sc. in Mathematics<br>About: Passionate about making math fun and engaging for students.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="teacher-photo">
+                    <img src="/images/icon.webp" alt="Teacher 2">
+                </div>
+                <div class="teacher-info">
+                    <h2>Mr. John Doe</h2>
+                    <p>Subject: Science<br>Experience: 8 years<br>Qualification: B.Ed., M.Sc. in Physics<br>About: Loves conducting experiments to spark curiosity.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="teacher-photo">
+                    <img src="/images/icon.webp" alt="Teacher 3">
+                </div>
+                <div class="teacher-info">
+                    <h2>Ms. Emily Brown</h2>
+                    <p>Subject: English<br>Experience: 12 years<br>Qualification: M.A. in Literature<br>About: Dedicated to improving students' communication skills.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="teacher-photo">
+                    <img src="/images/icon.webp" alt="Teacher 4">
+                </div>
+                <div class="teacher-info">
+                    <h2>Mr. Robert Lee</h2>
+                    <p>Subject: History<br>Experience: 15 years<br>Qualification: Ph.D. in History<br>About: Brings the past to life with storytelling.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="teacher-photo">
+                    <img src="/images/icon.webp" alt="Teacher 5">
+                </div>
+                <div class="teacher-info">
+                    <h2>Ms. Sarah Patel</h2>
+                    <p>Subject: Art<br>Experience: 7 years<br>Qualification: B.F.A. in Fine Arts<br>About: Inspires creativity through hands-on projects.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact List Section -->
+    <div class="contact-list">
+        <h2>Contact Our Teachers</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 1">
+                <div class="contact-details">
+                    <h3>Ms. Jane Smith</h3>
+                    <p>Phone: +1 234 567 8901<br>Email: jane.smith@school.com<br>Office Hours: Mon-Fri, 9 AM - 11 AM</p>
+                    <a href="tel:+12345678901" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 2">
+                <div class="contact-details">
+                    <h3>Mr. John Doe</h3>
+                    <p>Phone: +1 234 567 8902<br>Email: john.doe@school.com<br>Office Hours: Tue-Thu, 1 PM - 3 PM</p>
+                    <a href="tel:+12345678902" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 3">
+                <div class="contact-details">
+                    <h3>Ms. Emily Brown</h3>
+                    <p>Phone: +1 234 567 8903<br>Email: emily.brown@school.com<br>Office Hours: Wed-Fri, 10 AM - 12 PM</p>
+                    <a href="tel:+12345678903" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 4">
+                <div class="contact-details">
+                    <h3>Mr. Robert Lee</h3>
+                    <p>Phone: +1 234 567 8904<br>Email: robert.lee@school.com<br>Office Hours: Mon-Wed, 2 PM - 4 PM</p>
+                    <a href="tel:+12345678904" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 5">
+                <div class="contact-details">
+                    <h3>Ms. Sarah Patel</h3>
+                    <p>Phone: +1 234 567 8905<br>Email: sarah.patel@school.com<br>Office Hours: Thu-Sat, 11 AM - 1 PM</p>
+                    <a href="tel:+12345678905" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 5">
+                <div class="contact-details">
+                    <h3>Ms. Sarah Patel</h3>
+                    <p>Phone: +1 234 567 8905<br>Email: sarah.patel@school.com<br>Office Hours: Thu-Sat, 11 AM - 1 PM</p>
+                    <a href="tel:+12345678905" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 5">
+                <div class="contact-details">
+                    <h3>Ms. Sarah Patel</h3>
+                    <p>Phone: +1 234 567 8905<br>Email: sarah.patel@school.com<br>Office Hours: Thu-Sat, 11 AM - 1 PM</p>
+                    <a href="tel:+12345678905" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 5">
+                <div class="contact-details">
+                    <h3>Ms. Sarah Patel</h3>
+                    <p>Phone: +1 234 567 8905<br>Email: sarah.patel@school.com<br>Office Hours: Thu-Sat, 11 AM - 1 PM</p>
+                    <a href="tel:+12345678905" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <img src="icon.webp" alt="Teacher 5">
+                <div class="contact-details">
+                    <h3>Ms. Sarah Patel</h3>
+                    <p>Phone: +1 234 567 8905<br>Email: sarah.patel@school.com<br>Office Hours: Thu-Sat, 11 AM - 1 PM</p>
+                    <a href="tel:+12345678905" class="telephone-btn">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Slider -->
+    <script>
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // Auto-slide every 30 seconds
+        setInterval(nextSlide, 5000);
+
+        // Initial position
+        slider.style.transform = `translateX(0%)`;
+    </script>
+
+    <!-- Add this script at the very end of the body tag, just before </body> -->
+    <script>
+        function showLogoutPopup() {
+            document.getElementById("logoutPopup").style.display = "block";
+        }
+    
+        function confirmLogout() {
+            window.location.href = "/";  // Redirects to root route (login page)
+        }
+    
+        function cancelLogout() {
+            document.getElementById("logoutPopup").style.display = "none";
+        }
+    </script>
+</body>
+</html>

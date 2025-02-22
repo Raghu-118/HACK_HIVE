@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List - Scientia Demo School</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: url('/images/caroo.png') no-repeat;
+            background-size: cover;
+            color: #1E3A8A;
+            min-height: 100vh;
+            padding-top: 120px; /* Space for fixed navbar */
+        }
+
+        .nav-bar {
+            background: transparent;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-radius: 0 0 80px 80px;
+            height: 80px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            font-size: 40px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin-right: 10px;
+        }
+       
+        .profile-icon:hover {
+            color: #0145ff;
+            transform: scale(1.2);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            font-size: 20px;
+            width: max-content;
+            border-radius: 10px;
+        }
+
+        .user-info span {
+            font-weight: 1000;
+            color: #F3F4F6;
+        }
+
+        .logout-btn {
+            background: #F472B6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 50%;
+        }
+
+        .logout-btn:hover {
+            background: #e81e1e;
+            transform: translateY(-2px);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            color: #F472B6;
+            transform: scale(1.2);
+        }
+
+        .home-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .home-icon:hover {
+            color: #48BB78;
+            transform: scale(1.2);
+        }
+        .logout-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #1E3A8A;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    animation: popUp 0.5s ease-out forwards;
+}
+
+@keyframes popUp {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.logout-popup p {
+    font-size: 16px;
+    color: #1E3A8A;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.logout-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.logout-buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-buttons .yes-btn {
+    background: #F472B6;
+    color: white;
+}
+
+.logout-buttons .yes-btn:hover {
+    background: #e81e1e;
+}
+
+.logout-buttons .no-btn {
+    background: #37b2f4ce;
+    color: #1E3A8A;
+}
+
+.logout-buttons .no-btn:hover {
+    background: #0145ff;
+    color: white;
+}
+
+        .students-container {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgb(94, 94, 94);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        .students-container h1 {
+            font-size: 36px;
+            color: #0145ff;
+            margin-bottom: 20px;
+        }
+
+        .student-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .student-item {
+            background: #6cddf1ce;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .student-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-item h3 {
+            font-size: 18px;
+            color: #1E3A8A;
+            margin-bottom: 5px;
+        }
+
+        .student-item p {
+            font-size: 14px;
+            color: #4A5568;
+        }
+
+        @media (max-width: 480px) {
+            .students-container {
+                padding: 20px;
+                margin: 10px auto;
+            }
+
+            .students-container h1 {
+                font-size: 28px;
+            }
+
+            .student-item h3 {
+                font-size: 16px;
+            }
+
+            .student-item p {
+                font-size: 12px;
+            }
+
+            .nav-bar {
+                padding: 5px 10px;
+                height: 60px;
+            }
+
+            .profile-icon, .home-icon, .notification-icon {
+                font-size: 24px;
+            }
+
+            .user-info span {
+                font-size: 16px;
+            }
+
+            .logout-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            body {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <div class="logout-buttons">
+            <button class="yes-btn" onclick="confirmLogout()">Yes</button>
+            <button class="no-btn" onclick="cancelLogout()">No</button>
+        </div>
+    </div>
+    <script>
+        // Example for future backend integration
+        fetch('/api/students')
+            .then(response => response.json())
+            .then(students => {
+                const list = document.querySelector('.student-list');
+                list.innerHTML = students.map(student => `
+                    <div class="student-item">
+                        <h3>${student.name}</h3>
+                        <p>Roll: ${student.roll}<br>Class: ${student.class}<br>Details: ${student.details}</p>
+                    </div>
+                `).join('');
+            });
+    </script>
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <i class='bx bx-user-circle profile-icon' onclick="window.location.href='profile.html'"></i>
+            <div class="user-info">
+                <span>Name: John Doe</span>
+                <span>Roll: 15</span>
+                <span>Class: 10A</span>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
+        <i class='bx bxs-home home-icon' onclick="window.location.href='dashbord.html'"></i>
+        <div class="nav-right">
+            <span class="home-icon" onclick="window.location.href='/dashboard'">🏠</span>
+            <a class='bx bxs-bell notification-icon' href="/notifications""></a>
+        </div>
+    </nav>
+
+    <div class="students-container">
+        <h1>Student List</h1>
+        <div class="student-list">
+            <div class="student-item">
+                <h3>Student Name</h3>
+                <p>Roll: TBD<br>Class: TBD<br>Details: Placeholder for student info uploaded by teacher.</p>
+            </div>
+            <div class="student-item">
+                <h3>Student Name</h3>
+                <p>Roll: TBD<br>Class: TBD<br>Details: Placeholder for student info uploaded by teacher.</p>
+            </div>
+            <div class="student-item">
+                <h3>Student Name</h3>
+                <p>Roll: TBD<br>Class: TBD<br>Details: Placeholder for student info uploaded by teacher.</p>
+            </div>
+            <!-- Add more student-item blocks as needed -->
+        </div>
+    </div>
+    <script>
+        function showLogoutPopup() {
+            document.getElementById("logoutPopup").style.display = "block";
+        }
+    
+        function confirmLogout() {
+            window.location.href = "/";  // Redirects to root route (login page)
+        }
+    
+        function cancelLogout() {
+            document.getElementById("logoutPopup").style.display = "none";
+        }
+    </script>
+</body>
+</html>

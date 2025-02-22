@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: url('/images/caroo.png') no-repeat;
+            background-size: cover;
+            color: #1E3A8A;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-container {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgb(94, 94, 94);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .profile-container h1 {
+            font-size: 36px;
+            color: #0145ff;
+            margin-bottom: 20px;
+        }
+
+        .profile-container p {
+            font-size: 18px;
+            color: #1E3A8A;
+        }
+        .nav-bar {
+            background: transparent;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            margin-top: 50px;
+            border-radius: 80px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            font-size: 40px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .profile-icon:hover {
+            color: #0145ff; /* Blue on hover */
+            transform: scale(1.2); /* Slight enlargement */
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            font-size: 20px;
+            width: max-content;
+            border-radius: 10px;
+        }
+
+        .user-info span {
+            font-weight: 1000;
+            color: #F3F4F6;
+        }
+
+        .logout-btn {
+            background: #F472B6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 50%;
+        }
+
+        .logout-btn:hover {
+            background: #e81e1e;
+            transform: translateY(-2px);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            color: #F472B6;
+            transform: scale(1.2);
+        }
+
+        .home-icon {
+            font-size: 30px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .home-icon:hover {
+            color: #48BB78;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <i class='bx bx-user-circle profile-icon' onclick="window.location.href='profile.html'"></i>
+            <div class="user-info">
+                <span>Name: John Doe</span>
+                <span>Roll: 15</span>
+                <span>Class: 10A</span>
+            </div>
+        </div>
+        <!-- <a class="logout-btn" href="/">Logout</a> -->
+        <a class="logout-btn" href="/">Logout</a>
+        <span class="home-icon" onclick="window.location.href='/dashboard'">🏠</span>
+        <div class="nav-right">
+            <a class='bx bxs-bell notification-icon' href="/notifications""></a>
+
+        </div>
+    </nav>
+    <div class="profile-container">
+        <h1>My Profile</h1>
+        <p>Personal profile content will be added here.</p>
+    </div>
+</body>
+</html>

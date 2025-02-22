@@ -1,0 +1,469 @@
+=<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Payment</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-top:400px; /* Space for navbar */
+            background: url(/images/caroo.png) no-repeat;
+            background-size:cover;
+            min-height :65vh;;
+            overflow-x: hidden ;
+            display: flex;
+            justify-content: center;
+            justify-items: center;
+            margin-left: 43%;
+            
+        }
+
+        .container {
+            justify-content: center;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            box-sizing: border-box;
+            animation: popUp 0.8s ease-out forwards;
+            
+          
+        }
+
+        @keyframes popUp {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            80% {
+                transform: scale(1.1); /* Slight overshoot for bounce */
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .content {
+            padding: 15px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .fee-card {
+            background-color: #1a73e8;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .fee-card div {
+            flex: 1;
+        }
+
+        .fee-card p {
+            font-size: 12px;
+            margin: 0 0 5px 0;
+        }
+
+        .fee-card h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .info-card {
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            color: #1a73e8;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+
+        .payment-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            font-size: 12px;
+        }
+
+        .payment-info:last-child {
+            border-bottom: none;
+        }
+
+        .payment-info span {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .check-mark {
+            color: #4CAF50;
+            font-size: 16px;
+        }
+
+        .reprocess-button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .reprocess-button:hover {
+            background-color: #1557b0;
+        }
+
+        .nav-bar {
+            background: transparent;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            max-width: 1000px;
+            top: 0;
+            z-index: 1000;
+            border-radius: 0 0 80px 80px;
+            height: 80px;
+            animation: fadeIn 0.5s ease-out forwards;
+            box-sizing: border-box;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            font-size: 36px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin-right: 15px;
+        }
+
+        .profile-icon:hover {
+            color: #0145ff;
+            transform: scale(1.2);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            font-size: 18px;
+            width: max-content;
+            border-radius: 10px;
+        }
+
+        .user-info span {
+            font-weight: 1000;
+            color: #F3F4F6;
+        }
+
+        .logout-btn {
+            background: #F472B6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 30px;
+        }
+
+        .logout-btn:hover {
+            background: #e81e1e;
+            transform: translateY(-2px);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-icon {
+            font-size: 36px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            color: #F472B6;
+            transform: scale(1.2);
+        }
+
+        .home-icon {
+            font-size: 36px;
+            color: #F3F4F6;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .home-icon:hover {
+            color: #48BB78;
+            transform: scale(1.2);
+        }
+
+        .logout-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #1E3A8A;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            animation: popUp 0.5s ease-out forwards;
+        }
+
+        @keyframes popUp {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            80% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .logout-popup p {
+            font-size: 16px;
+            color: #1E3A8A;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .logout-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .logout-buttons button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .logout-buttons .yes-btn {
+            background: #F472B6;
+            color: white;
+        }
+
+        .logout-buttons .yes-btn:hover {
+            background: #e81e1e;
+        }
+
+        .logout-buttons .no-btn {
+            background: #37b2f4ce;
+            color: #1E3A8A;
+        }
+
+        .logout-buttons .no-btn:hover {
+            background: #0145ff;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .nav-bar {
+                padding: 10px 15px;
+                height: 60px;
+            }
+            .profile-icon, .home-icon, .notification-icon {
+                font-size: 28px;
+            }
+            .user-info span {
+                font-size: 14px;
+            }
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                margin-left: 10px;
+            }
+            body {
+                padding-top: 80px;
+            }
+            .container {
+                max-width: 100%;
+            }
+            .fee-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .info-card h3 {
+                font-size: 12px;
+            }
+            .payment-info {
+                font-size: 10px;
+                padding: 6px 0;
+            }
+            .reprocess-button {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <i class='bx bx-user-circle profile-icon' onclick="window.location.href='profile.html'"></i>
+            <div class="user-info">
+                <span>Name: John Doe</span>
+                <span>Roll: 15</span>
+                <span>Class: 10A</span>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
+        <div class="nav-right">
+            <i class='bx bxs-home home-icon' onclick="window.location.href='dashbord.html'"></i>
+            <span class="home-icon" onclick="window.location.href='/dashboard'">🏠</span>
+            <a class='bx bxs-bell notification-icon' href="/notifications""></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-title">Fee Payment</div>
+            <div class="header-icons">
+                <button class="help-btn">?</button>
+                <button class="rupee-btn">₹</button>
+            </div>
+        </div>
+    
+        <div class="content">
+            <div class="fee-card">
+                <div>
+                    <p>Fee Pending</p>
+                    <h2>₹0.00</h2>
+                </div>
+                <div>
+                    <p>Total Fee Amount</p>
+                    <h2>₹28000.00</h2>
+                    <p>Paid Amount</p>
+                    <h2>₹28000.00</h2>
+                </div>
+            </div>
+    
+            <div class="info-card">
+                <h3>Name: CHRIS FERNANDES</h3>
+                <h3>Admission No.: 2271</h3>
+                <h3>Class & Section: X B</h3>
+            </div>
+    
+            <div class="info-card">
+                <h3>Fee Paid Info</h3>
+                <div class="payment-info">
+                    <span>Amount Paid: ₹18000.00</span>
+                    <span>Receipt No.: 0302</span>
+                    <span>Payment Mode: ONLINE</span>
+                    <span class="check-mark">✔</span>
+                </div>
+                <div class="payment-info">
+                    <span>Amount Paid: ₹10000.00</span>
+                    <span>Receipt No.: 2418</span>
+                    <span>Payment Mode: DD</span>
+                    <span class="check-mark">✔</span>
+                </div>
+            </div>
+    
+            <button class="reprocess-button">Click Here For Payment Reprocess</button>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Popup -->
+    <div class="logout-popup" id="logoutPopup">
+        <p>Are you sure you want to logout?</p>
+        <div class="logout-buttons">
+            <button class="yes-btn" onclick="confirmLogout()">Yes</button>
+            <button class="no-btn" onclick="cancelLogout()">No</button>
+        </div>
+    </div>
+
+    <script>
+        function showLogoutPopup() {
+            document.getElementById("logoutPopup").style.display = "block";
+        }
+    
+        function confirmLogout() {
+            window.location.href = "/";
+        }
+    
+        function cancelLogout() {
+            document.getElementById("logoutPopup").style.display = "none";
+        }
+    </script>
+</body>
+</html>
